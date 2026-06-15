@@ -284,6 +284,10 @@ upload-xiao_s3:
 	python ./Release/esptool/esptool.py --chip esp32s3 --port /dev/ttyACM0 --baud 921600 --before default_reset --after hard_reset write_flash -z --flash_mode dio --flash_freq 80m --flash_size 4MB 0x210000 ./Release/console_image.bin
 
 upload-retia_nibble:
+	esptool -p /dev/ttyACM0 --chip=esp32s3 --after hard_reset erase_flash
+	@sleep 1
+	esptool -p /dev/ttyACM0 --chip=esp32s3 --before default_reset --after hard_reset write_flash --flash_size 4MB --flash_mode keep --verify 0x0 ./build/esp32.esp32.esp32s3/RNode_Firmware.ino.bootloader.bin 0x10000 ./build/esp32.esp32.esp32s3/RNode_Firmware.ino.bin
+	@sleep 1
 	arduino-cli upload -p /dev/ttyACM0 --fqbn "esp32:esp32:esp32s3:CDCOnBoot=cdc,PSRAM=enabled"
 	@sleep 1
 	rnodeconf /dev/ttyACM0 --firmware-hash $$(./partition_hashes ./build/esp32.esp32.esp32s3/RNode_Firmware.ino.bin)
