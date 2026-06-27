@@ -162,7 +162,12 @@ These were required
 
 ## Dependencies to install
 - `arduino-cli`:  https://arduino.github.io/arduino-cli/0.20/installation/
+- `arduino-cli core install esp32:esp32`
 - `rns` (includes `rnodeconf`): `pip install rns`
+- `make pre-esp32`
+- Update `~/.arduino15/packages/esp32/hardware/esp32/2.0.17/libraries/BluetoothSerial/src/BluetoothSerial.cpp` to have
+  - RX_QUEUE_SIZE 6144
+  - TX_QUEUE_SIZE 384
 
 ## Compiling, flashing, configuring
 ```bash
@@ -175,7 +180,7 @@ $ make firmware-retia_nibble
 $ esptool --chip=esp32s3 --port=/dev/ttyACM0 erase_flash
 
 # Write to flash
-$ esptool -p /dev/ttyACM0 --chip=esp32s3 --before default_reset --after hard_reset write_flash --flash_size 4MB --flash_mode keep --verify 0x0 ./build/esp32.esp32.esp32s3/RNode_Firmware.ino.bootloader.bin 0x10000 ./build/esp32.esp32.esp32s3/RNode_Firmware.ino.bin
+$ esptool -p /dev/ttyACM0 --chip=esp32s3 --before default-reset --after hard-reset write-flash --flash-size 4MB --flash-mode keep 0x0 ./build/esp32.esp32.esp32s3/RNode_Firmware.ino.bootloader.bin 0x10000 ./build/esp32.esp32.esp32s3/RNode_Firmware.ino.bin
 
 # Then write again, but with different settings. This errors if you don't do the esptool first, but the firmware won't boot unless you use arduino-cli in here.
 $ make upload-retia_nibble

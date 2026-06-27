@@ -120,7 +120,7 @@
   #define BOARD_GENERIC_ESP32 0x35
   #define BOARD_GENERIC_NRF52 0x50
   #define BOARD_HAD_COMM      0xFE // Hackaday Communicator Badge
-  #define BOARD_RETIA_NIBBLE  0xFF // Hackaday Communicator Badge
+  #define BOARD_RETIA_NIBBLE  0xFF // Retia Nibble Zero Connect
   #define MODEL_FE            0xFE // Homebrew board, max 17dBm output power
   #define MODEL_FF            0xFF // Homebrew board, max 14dBm output power
 
@@ -721,9 +721,14 @@
       #define IS_ESP32S3 true
       #define MODEM SX1262
       #define HAS_EEPROM true
-      #define HAS_DISPLAY false
+      #define EEPROM_SIZE 296
+      #define EEPROM_OFFSET EEPROM_SIZE-EEPROM_RESERVED
+      #define HAS_DISPLAY true
+      #define DISPLAY OLED 
       #define HAS_BLUETOOTH false
       #define HAS_BLE true
+      #define BLE_MANUFACTURER "retia"
+      #define BLE_MODEL "nibble"
       #define HAS_CONSOLE true
       #define HAS_PMU false
       #define HAS_NP true
@@ -734,12 +739,10 @@
       #define HAS_SLEEP false
       #define DIO2_AS_RF_SWITCH true
       #define CONFIG_UART_BUFFER_SIZE 6144
+      #define CONFIG_QUEUE_0_SIZE 6144 
       #define CONFIG_QUEUE_SIZE 6144
       #define CONFIG_QUEUE_MAX_LENGTH 200
-      #define EEPROM_SIZE 296
-      #define EEPROM_OFFSET EEPROM_SIZE-EEPROM_RESERVED
-      #define BLE_MANUFACTURER "retia"
-      #define BLE_MODEL "nibble"
+      //#define HAS_TCXO false 
 
       const int pin_miso = 13;
       const int pin_mosi = 11;
@@ -759,6 +762,29 @@
 
       // pins for buttons on Retia Nibble
       const int pin_btn_usr1 = 1;
+
+      // #define INTERFACE_COUNT 1 
+      // const uint8_t interfaces[INTERFACE_COUNT] = {SX1262}; 
+      // const bool interface_cfg[INTERFACE_COUNT][3] = {  
+      //     {
+      //         true, 
+      //         true, 
+      //         true 
+      //     } 
+      // };      const int8_t interface_pins[INTERFACE_COUNT][10] = {  
+      //     { 
+      //         10, 
+      //         12, 
+      //         11, 
+      //         13, 
+      //         5, 
+      //         4, 
+      //         6, 
+      //         -1, 
+      //         -1, 
+      //         -1 
+      //     } 
+      // };
 
     #elif BOARD_MODEL == BOARD_HAD_COMM
       #define IS_ESP32S3 true
