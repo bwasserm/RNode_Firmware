@@ -1530,7 +1530,10 @@ void validate_status() {
 
   if (boot_vector == START_FROM_BOOTLOADER || boot_vector == START_FROM_POWERON) {
     if (eeprom_lock_set()) {
-      if (eeprom_product_valid() && eeprom_model_valid() && eeprom_hwrev_valid()) {
+      bool product_valid = eeprom_product_valid();
+      bool model_valid = eeprom_model_valid();
+      bool hwrev_valid = eeprom_hwrev_valid();
+      if (product_valid && model_valid && hwrev_valid) {
         if (eeprom_checksum_valid()) {
           eeprom_ok = true;
           if (modem_installed) {
@@ -1572,6 +1575,15 @@ void validate_status() {
       } else {
         hw_ready = false;
         Serial.write("Invalid EEPROM configuration\r\n");
+        if (!product_valid) {
+          Serial.write("Product invalid\r\n");
+        }
+        if (!model_valid) {
+          Serial.write("Model invalid\r\n");
+        }
+        if (!hwrev_valid) {
+          Serial.write("Hwrev invalid\r\n");
+        }
         #if HAS_DISPLAY
           if (disp_ready) {
             device_init_done = true;

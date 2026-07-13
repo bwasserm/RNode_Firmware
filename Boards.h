@@ -114,13 +114,15 @@
   #define MODEL_11            0x11 // RAK4631, 433 Mhz
   #define MODEL_12            0x12 // RAK4631, 868 Mhz
 
+  #define PRODUCT_RETIA_NBBL  0x60
+  #define BOARD_RETIA_NBBL0   0x61 // Nibble Zero Connect
+  #define MODEL_D1            0xD1
+
   #define PRODUCT_HMBRW       0xF0
   #define BOARD_HMBRW         0x32
   #define BOARD_HUZZAH32      0x34
   #define BOARD_GENERIC_ESP32 0x35
   #define BOARD_GENERIC_NRF52 0x50
-  #define BOARD_HAD_COMM      0xFE // Hackaday Communicator Badge
-  #define BOARD_RETIA_NIBBLE  0xFF // Retia Nibble Zero Connect
   #define MODEL_FE            0xFE // Homebrew board, max 17dBm output power
   #define MODEL_FF            0xFF // Homebrew board, max 14dBm output power
 
@@ -717,7 +719,7 @@
         #endif
       #endif
 
-    #elif BOARD_MODEL == BOARD_RETIA_NIBBLE
+    #elif BOARD_MODEL == BOARD_RETIA_NBBL0
       #define IS_ESP32S3 true
       #define MODEM SX1262
       #define HAS_EEPROM true
@@ -762,99 +764,6 @@
 
       // pins for buttons on Retia Nibble
       const int pin_btn_usr1 = 1;
-
-      // #define INTERFACE_COUNT 1 
-      // const uint8_t interfaces[INTERFACE_COUNT] = {SX1262}; 
-      // const bool interface_cfg[INTERFACE_COUNT][3] = {  
-      //     {
-      //         true, 
-      //         true, 
-      //         true 
-      //     } 
-      // };      const int8_t interface_pins[INTERFACE_COUNT][10] = {  
-      //     { 
-      //         10, 
-      //         12, 
-      //         11, 
-      //         13, 
-      //         5, 
-      //         4, 
-      //         6, 
-      //         -1, 
-      //         -1, 
-      //         -1 
-      //     } 
-      // };
-
-    #elif BOARD_MODEL == BOARD_HAD_COMM
-      #define IS_ESP32S3 true
-      #define MODEM SX1262
-      #define HAS_EEPROM true
-      #define HAS_DISPLAY false
-      #define HAS_BLUETOOTH false
-      #define HAS_BLE true
-      #define HAS_CONSOLE true
-      #define HAS_PMU false
-      #define HAS_NP false
-      #define HAS_SD false
-      #define HAS_TCXO true
-      #define HAS_BUSY true
-      #define HAS_INPUT false
-      #define HAS_SLEEP false
-      #define DIO2_AS_RF_SWITCH false
-      #define CONFIG_UART_BUFFER_SIZE 6144
-      #define CONFIG_QUEUE_SIZE 6144
-      #define CONFIG_QUEUE_MAX_LENGTH 200
-      #define EEPROM_SIZE 296
-      #define EEPROM_OFFSET EEPROM_SIZE-EEPROM_RESERVED
-      #define BLE_MANUFACTURER "HAD"
-      #define BLE_MODEL "Comm"
-
-      #define PIN_T114_ADC_EN 6
-      #define PIN_VEXT_EN 21
-
-      // LED
-      #define LED_T114_GREEN 1
-      #define PIN_T114_LED 14
-      #define NP_M 1
-      const int pin_np = PIN_T114_LED;
-
-      // SPI
-      #define PIN_T114_MOSI 3
-      #define PIN_T114_MISO 9
-      #define PIN_T114_SCK  8
-      #define PIN_T114_SS   17
-
-      // SX1262
-      #define PIN_T114_RST  18
-      #define PIN_T114_DIO1 16
-      #define PIN_T114_BUSY 15
-
-      // TFT
-      #define DISPLAY_SCALE 2
-      #define PIN_T114_TFT_MOSI 9
-      #define PIN_T114_TFT_MISO 11 // not connected
-      #define PIN_T114_TFT_SCK 8
-      #define PIN_T114_TFT_SS 11
-      #define PIN_T114_TFT_DC 12
-      #define PIN_T114_TFT_RST 2
-      #define PIN_T114_TFT_EN 3
-      #define PIN_T114_TFT_BLGT 15
-
-      // pins for buttons on Heltec T114
-      const int pin_btn_usr1 = 42;
-
-      // pins for sx1262 on Heltec T114
-      const int pin_reset = PIN_T114_RST;
-      const int pin_cs = PIN_T114_SS;
-      const int pin_sclk = PIN_T114_SCK;
-      const int pin_mosi = PIN_T114_MOSI;
-      const int pin_miso = PIN_T114_MISO;
-      const int pin_busy = PIN_T114_BUSY;
-      const int pin_dio = PIN_T114_DIO1;
-      const int pin_led_rx = 1;
-      const int pin_led_tx = 1;
-      const int pin_tcxo_enable = -1;
 
     #else
       #error An unsupported ESP32 board was selected. Cannot compile RNode firmware.

@@ -139,8 +139,8 @@ firmware-featheresp32: check_bt_buffers
 firmware-genericesp32: check_bt_buffers
 	arduino-cli compile --log --fqbn esp32:esp32:esp32 -e --build-property "build.partitions=no_ota" --build-property "upload.maximum_size=2097152" --build-property "compiler.cpp.extra_flags=\"-DBOARD_MODEL=0x35\""
 
-firmware-retia_nibble: check_bt_buffers
-	arduino-cli compile --log --fqbn "esp32:esp32:esp32s3:CDCOnBoot=cdc,PSRAM=enabled" -e --build-property "build.partitions=no_ota" --build-property "upload.maximum_size=2097152" --build-property "compiler.cpp.extra_flags=\"-DBOARD_MODEL=0xFF\""
+firmware-retia_nibble0: check_bt_buffers
+	arduino-cli compile --log --fqbn "esp32:esp32:esp32s3:CDCOnBoot=cdc,PSRAM=enabled" -e --build-property "build.partitions=no_ota" --build-property "upload.maximum_size=2097152" --build-property "compiler.cpp.extra_flags=\"-DBOARD_MODEL=0x61\""
 
 firmware-had_communicator: check_bt_buffers
 	arduino-cli compile --log --fqbn "esp32:esp32:esp32s3:CDCOnBoot=cdc" -e --build-property "build.partitions=no_ota" --build-property "upload.maximum_size=2097152" --build-property "compiler.cpp.extra_flags=\"-DBOARD_MODEL=0xFE\""
@@ -283,16 +283,16 @@ upload-xiao_s3:
 	@sleep 3
 	python ./Release/esptool/esptool.py --chip esp32s3 --port /dev/ttyACM0 --baud 921600 --before default_reset --after hard_reset write_flash -z --flash_mode dio --flash_freq 80m --flash_size 4MB 0x210000 ./Release/console_image.bin
 
-upload-retia_nibble:
+upload-retia_nibble0:
 # 	esptool -p /dev/ttyACM0 --chip=esp32s3 --after hard-reset erase-flash
 	@sleep 1
-	esptool -p /dev/ttyACM0 --chip=esp32s3 --before default-reset --after hard-reset write-flash --flash-size 4MB --flash-mode keep 0x0 ./build/esp32.esp32.esp32s3/RNode_Firmware.ino.bootloader.bin 0x10000 ./build/esp32.esp32.esp32s3/RNode_Firmware.ino.bin 0x8000 ./build/esp32.esp32.esp32s3/RNode_Firmware.ino.partitions.bin 0xe000 "~/.arduino15/packages/esp32/hardware/esp32/2.0.17/tools/partitions/boot_app0.bin"
+	esptool -p /dev/ttyACM0 --chip=esp32s3 --before default-reset --after hard-reset write-flash --flash-size 4MB --flash-mode keep 0x0 ./build/esp32.esp32.esp32s3/RNode_Firmware.ino.bootloader.bin 0x10000 ./build/esp32.esp32.esp32s3/RNode_Firmware.ino.bin 0x8000 ./build/esp32.esp32.esp32s3/RNode_Firmware.ino.partitions.bin 0xe000 ~/.arduino15/packages/esp32/hardware/esp32/2.0.17/tools/partitions/boot_app0.bin
 	@sleep 1
 	# arduino-cli upload -p /dev/ttyACM0 --fqbn "esp32:esp32:esp32s3:CDCOnBoot=cdc,PSRAM=enabled"
 	# python3 "/home/ben/.arduino15/packages/esp32/tools/esptool_py/4.5.1/esptool.py" --chip esp32s3 --port "/dev/ttyACM0" --baud 921600  --before default_reset --after hard_reset write_flash  -z --flash_mode dio --flash_freq 80m --flash_size 4MB 0x0 "/home/ben/.cache/arduino/sketches/EE57A13B2BC6F266A4868F5CA4A3788C/RNode_Firmware.ino.bootloader.bin" 0x8000 "/home/ben/.cache/arduino/sketches/EE57A13B2BC6F266A4868F5CA4A3788C/RNode_Firmware.ino.partitions.bin" 0xe000 "/home/ben/.arduino15/packages/esp32/hardware/esp32/2.0.17/tools/partitions/boot_app0.bin" 0x10000 "/home/ben/.cache/arduino/sketches/EE57A13B2BC6F266A4868F5CA4A3788C/RNode_Firmware.ino.bin"
 	@sleep 1
-# 	These args match BOARD_RETIA_NIBBLE in Boards.h 
-	rnodeconf /dev/ttyACM0 -r --platform 80 --product f0 --model fe --hwrev 1
+# 	These args match BOARD_RETIA_NBBL0 in Boards.h 
+	rnodeconf /dev/ttyACM0 -r --platform 80 --product 60 --model d1 --hwrev 1
 	@sleep 1
 	rnodeconf /dev/ttyACM0 --firmware-hash $$(./partition_hashes ./build/esp32.esp32.esp32s3/RNode_Firmware.ino.bin)
 #   These no longer seem to be necessary

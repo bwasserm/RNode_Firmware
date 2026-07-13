@@ -319,7 +319,7 @@ uint8_t boot_vector = 0x00;
 		void led_tx_off() { digitalWrite(pin_led_tx, LOW); }
 		void led_id_on()  { }
 		void led_id_off() { }
-	#elif BOARD_MODEL == BOARD_RETIA_NIBBLE
+	#elif BOARD_MODEL == BOARD_RETIA_NBBL0
 		void led_rx_on()  { digitalWrite(pin_led_rx, HIGH); }
 		void led_rx_off() {	digitalWrite(pin_led_rx, LOW); }
 		void led_tx_on()  { digitalWrite(pin_led_tx, HIGH); }
@@ -1376,7 +1376,7 @@ void setTXPower() {
 		if (model == MODEL_12) LoRa->setTxPower(mapped_lora_txp, PA_OUTPUT_RFO_PIN);
 
 		if (model == MODEL_C6) LoRa->setTxPower(mapped_lora_txp, PA_OUTPUT_RFO_PIN);
-    if (model == MODEL_C7) LoRa->setTxPower(mapped_lora_txp, PA_OUTPUT_RFO_PIN);
+		if (model == MODEL_C7) LoRa->setTxPower(mapped_lora_txp, PA_OUTPUT_RFO_PIN);
 
 		if (model == MODEL_A1) LoRa->setTxPower(mapped_lora_txp, PA_OUTPUT_PA_BOOST_PIN);
 		if (model == MODEL_A2) LoRa->setTxPower(mapped_lora_txp, PA_OUTPUT_PA_BOOST_PIN);
@@ -1403,6 +1403,7 @@ void setTXPower() {
 		if (model == MODEL_CA) LoRa->setTxPower(mapped_lora_txp, PA_OUTPUT_PA_BOOST_PIN);
 		if (model == MODEL_C8) LoRa->setTxPower(mapped_lora_txp, PA_OUTPUT_PA_BOOST_PIN);
 
+		if (model == MODEL_D1) LoRa->setTxPower(mapped_lora_txp, PA_OUTPUT_PA_BOOST_PIN);
 		if (model == MODEL_D4) LoRa->setTxPower(mapped_lora_txp, PA_OUTPUT_PA_BOOST_PIN);
 		if (model == MODEL_D9) LoRa->setTxPower(mapped_lora_txp, PA_OUTPUT_PA_BOOST_PIN);
 
@@ -1631,7 +1632,7 @@ bool eeprom_product_valid() {
 	#if PLATFORM == PLATFORM_AVR
 	if (rval == PRODUCT_RNODE || rval == PRODUCT_HMBRW) {
 	#elif PLATFORM == PLATFORM_ESP32
-	if (rval == PRODUCT_RNODE || rval == BOARD_RNODE_NG_20 || rval == BOARD_RNODE_NG_21 || rval == PRODUCT_HMBRW || rval == PRODUCT_TBEAM || rval == PRODUCT_T32_10 || rval == PRODUCT_T32_20 || rval == PRODUCT_T32_21 || rval == PRODUCT_H32_V2 || rval == PRODUCT_H32_V3 || rval == PRODUCT_H32_V4 || rval == PRODUCT_TDECK_V1 || rval == PRODUCT_TBEAM_S_V1  || rval == PRODUCT_XIAO_S3) {
+	if (rval == PRODUCT_RNODE || rval == BOARD_RNODE_NG_20 || rval == BOARD_RNODE_NG_21 || rval == PRODUCT_HMBRW || rval == PRODUCT_TBEAM || rval == PRODUCT_T32_10 || rval == PRODUCT_T32_20 || rval == PRODUCT_T32_21 || rval == PRODUCT_H32_V2 || rval == PRODUCT_H32_V3 || rval == PRODUCT_H32_V4 || rval == PRODUCT_TDECK_V1 || rval == PRODUCT_TBEAM_S_V1  || rval == PRODUCT_XIAO_S3 || rval == PRODUCT_RETIA_NBBL) {
 	#elif PLATFORM == PLATFORM_NRF52
 	if (rval == PRODUCT_RAK4631 || rval == PRODUCT_HELTEC_T114 || rval == PRODUCT_TECHO || rval == PRODUCT_HMBRW) {
 	#else
@@ -1681,15 +1682,15 @@ bool eeprom_model_valid() {
 	if (model == MODEL_C5 || model == MODEL_CA) {
 	#elif BOARD_MODEL == BOARD_HELTEC32_V4
 	if (model == MODEL_C8) {
-  #elif BOARD_MODEL == BOARD_HELTEC_T114
-  if (model == MODEL_C6 || model == MODEL_C7) {
-  #elif BOARD_MODEL == BOARD_RAK4631
-  if (model == MODEL_11 || model == MODEL_12) {
+	#elif BOARD_MODEL == BOARD_HELTEC_T114
+	if (model == MODEL_C6 || model == MODEL_C7) {
+	#elif BOARD_MODEL == BOARD_RAK4631
+	if (model == MODEL_11 || model == MODEL_12) {
+	#elif BOARD_MODEL == BOARD_RETIA_NBBL0
+	if (model == MODEL_D1) {
 	#elif BOARD_MODEL == BOARD_HUZZAH32
 	if (model == MODEL_FF) {
 	#elif BOARD_MODEL == BOARD_GENERIC_ESP32
-	if (model == MODEL_FF || model == MODEL_FE) {
-	#elif BOARD_MODEL == BOARD_RETIA_NIBBLE
 	if (model == MODEL_FF || model == MODEL_FE) {
 	#else
 	if (false) {
